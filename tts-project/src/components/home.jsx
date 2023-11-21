@@ -60,8 +60,6 @@ export default function Home() {
 
     setUserStatus({ ...userStatus, microphone: !userStatus.microphone });
 
-    // userStatus.microphone = !userStatus.microphone;
-    // editButtonClass(e, userStatus.microphone);
     emitUserInformation();
   }
 
