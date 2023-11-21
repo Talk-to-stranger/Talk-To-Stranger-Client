@@ -43,28 +43,6 @@ export default function Home() {
     emitUserInformation();
   }
 
-  function toggleMute(e) {
-    // console.log(userStatus);
-    setMicrophone(!microphone);
-
-    setUserStatus({ ...userStatus, mute: !userStatus.mute });
-
-    // userStatus.mute = !userStatus.mute;
-
-    // editButtonClass(e, userStatus.mute);
-    emitUserInformation();
-  }
-
-  function toggleMicrophone(e) {
-    // console.log(userStatus);
-
-    setUserStatus({ ...userStatus, microphone: !userStatus.microphone });
-
-    // userStatus.microphone = !userStatus.microphone;
-    // editButtonClass(e, userStatus.microphone);
-    emitUserInformation();
-  }
-
   //   function editButtonClass(target, bool) {
   //     const classList = target.classList;
   //     classList.remove('enable-btn');
