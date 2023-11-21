@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     // const s = ;
-    socket.emit('init', { userId: 1 });
+    socket.emit('init', { access_token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAwNTczNTc3fQ.ld36gIV4CF7XjfMnOn8TijJe8ZyTRVoO7xZcPesslVc' });
     // setSocket(s);
   }, [socket]);
 
@@ -34,6 +34,15 @@ export default function Home() {
   //   };
 
   function toggleConnection(e) {
+    console.log(userStatus.online);
+    if (userStatus.online === false) {
+      e.target.classList.remove('btn-primary');
+      e.target.classList.add('btn-danger');
+    } else {
+      console.log('tes');
+      e.target.classList.remove('btn-danger');
+      e.target.classList.add('btn-primary');
+    }
     // userStatus.online = !userStatus.online;
     // console.log(!online);
     setOnline(!online);
@@ -44,6 +53,13 @@ export default function Home() {
   }
 
   function toggleMute(e) {
+    if (userStatus.mute === false) {
+      e.target.classList.remove('btn-primary');
+      e.target.classList.add('btn-danger');
+    } else {
+      e.target.classList.remove('btn-danger');
+      e.target.classList.add('btn-primary');
+    }
     // console.log(userStatus);
     setMicrophone(!microphone);
 
@@ -57,6 +73,13 @@ export default function Home() {
 
   function toggleMicrophone(e) {
     // console.log(userStatus);
+    if (userStatus.microphone === false) {
+      e.target.classList.remove('btn-primary');
+      e.target.classList.add('btn-danger');
+    } else {
+      e.target.classList.remove('btn-danger');
+      e.target.classList.add('btn-primary');
+    }
 
     setUserStatus({ ...userStatus, microphone: !userStatus.microphone });
 
