@@ -85,7 +85,7 @@ export default function Home() {
 
           let fileReader = new FileReader();
           fileReader.readAsDataURL(audioBlob);
-          console.log(userStatus.microphone, userStatus.online);
+          // console.log(userStatus.microphone, userStatus.online);
 
           fileReader.onloadend = function () {
             if (!userStatus.microphone || !userStatus.online) return;
@@ -113,7 +113,7 @@ export default function Home() {
       }
       socket.on('usersUpdate', function (data) {
         const newUsers = [];
-        console.log(data);
+        // console.log(data);
         for (const newUser in data) {
           newUsers.push(newUser);
         }

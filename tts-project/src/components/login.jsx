@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-const baseUrl = "http://localhost:3000"
+const baseUrl = "https://nyx.yoiego.my.id"
 export const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -11,8 +11,8 @@ export const Login = () => {
         console.log(email, "<< ini email")
         console.log(password, "<< ini password")
         try {
-            // const { data } = await axios.post(baseUrl + "/login", {email, password})
-            // console.log(data)
+            const { data } = await axios.post(baseUrl + "/login", {email, password})
+            console.log(data)
             navigate('/')
         } catch (error) {
             console.log(error)
