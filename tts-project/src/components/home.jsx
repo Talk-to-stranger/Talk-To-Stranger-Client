@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 export default function Home() {
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState(io('http://localhost:3000'));
+  const [microphone, setMicrophone] = useState(false);
+  const [online, setOnline] = useState(false);
   const [userStatus, setUserStatus] = useState({
     microphone: false,
     mute: false,
@@ -11,57 +13,18 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const s = io('http://localhost:3000');
-    s.emit('init', { userId: 1 });
-    setSocket(s);
-  }, []);
+    // const s = ;
+    socket.emit('init', { userId: 1 });
+    // setSocket(s);
+  }, [socket]);
 
-  function mainFunction(time) {
-    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      let madiaRecorder = new MediaRecorder(stream);
-      madiaRecorder.start();
+  // window.onload = () => {
+  // mainFunction(1000);
+  // };
 
-      let audioChunks = [];
-
-      madiaRecorder.addEventListener('dataavailable', function (event) {
-        audioChunks.push(event.data);
-      });
-
-      madiaRecorder.addEventListener('stop', function () {
-        let audioBlob = new Blob(audioChunks);
-
-        audioChunks = [];
-
-        let fileReader = new FileReader();
-        fileReader.readAsDataURL(audioBlob);
-        fileReader.onloadend = function () {
-          if (!userStatus.microphone || !userStatus.online) return;
-
-          let base64String = fileReader.result;
-          socket.emit('voice', base64String);
-        };
-
-        madiaRecorder.start();
-
-        setTimeout(function () {
-          madiaRecorder.stop();
-        }, time);
-      });
-
-      setTimeout(function () {
-        madiaRecorder.stop();
-      }, time);
-    });
-
-    socket.on('send', function (data) {
-      let audio = new Audio(data);
-      audio.play();
-    });
+  if (socket) {
+    socket.emit('userInformation', userStatus);
   }
-
-  window.onload = () => {
-    mainFunction(1000);
-  };
 
   //   const userStatus = {
   //     microphone: false,
@@ -71,8 +34,18 @@ export default function Home() {
   //   };
 
   function toggleConnection(e) {
+    console.log(userStatus.online);
+    if (userStatus.online === false) {
+      e.target.classList.remove('btn-primary');
+      e.target.classList.add('btn-danger');
+    } else {
+      console.log('tes');
+      e.target.classList.remove('btn-danger');
+      e.target.classList.add('btn-primary');
+    }
     // userStatus.online = !userStatus.online;
-    console.log(userStatus);
+    // console.log(!online);
+    setOnline(!online);
     setUserStatus({ ...userStatus, online: !userStatus.online });
 
     // editButtonClass(e, userStatus.online);
@@ -80,7 +53,15 @@ export default function Home() {
   }
 
   function toggleMute(e) {
-    console.log(userStatus);
+    if (userStatus.mute === false) {
+      e.target.classList.remove('btn-primary');
+      e.target.classList.add('btn-danger');
+    } else {
+      e.target.classList.remove('btn-danger');
+      e.target.classList.add('btn-primary');
+    }
+    // console.log(userStatus);
+    setMicrophone(!microphone);
 
     setUserStatus({ ...userStatus, mute: !userStatus.mute });
 
@@ -91,12 +72,17 @@ export default function Home() {
   }
 
   function toggleMicrophone(e) {
-    console.log(userStatus);
+    // console.log(userStatus);
+    if (userStatus.microphone === false) {
+      e.target.classList.remove('btn-primary');
+      e.target.classList.add('btn-danger');
+    } else {
+      e.target.classList.remove('btn-danger');
+      e.target.classList.add('btn-primary');
+    }
 
     setUserStatus({ ...userStatus, microphone: !userStatus.microphone });
 
-    // userStatus.microphone = !userStatus.microphone;
-    // editButtonClass(e, userStatus.microphone);
     emitUserInformation();
   }
 
@@ -109,6 +95,55 @@ export default function Home() {
 
   //     classList.add('disable-btn');
   //   }
+
+  useEffect(() => {
+    function mainFunction(time) {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+        let mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start();
+
+        let audioChunks = [];
+
+        mediaRecorder.addEventListener('dataavailable', function (event) {
+          audioChunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener('stop', function () {
+          let audioBlob = new Blob(audioChunks);
+
+          audioChunks = [];
+
+          let fileReader = new FileReader();
+          fileReader.readAsDataURL(audioBlob);
+          fileReader.onloadend = function () {
+            // console.log(userStatus.microphone);
+            if (!userStatus.microphone || !userStatus.online) return;
+            // console.log('masuk');
+
+            let base64String = fileReader.result;
+            // console.log('masuk sini gan', socket);
+            socket.emit('voice', base64String);
+          };
+
+          mediaRecorder.start();
+
+          setTimeout(function () {
+            mediaRecorder.stop();
+          }, time);
+        });
+
+        setTimeout(function () {
+          mediaRecorder.stop();
+        }, time);
+      });
+
+      socket.on('send', function (data) {
+        let audio = new Audio(data);
+        audio.play();
+      });
+    }
+    mainFunction(1000);
+  }, [microphone, socket, userStatus.microphone, userStatus.online]);
 
   function emitUserInformation() {
     socket.emit('userInformation', userStatus);
