@@ -32,7 +32,7 @@ export const Login = () => {
                     <label  style={{color: "#EACDC2"}} htmlFor="exampleFormControlInput1" className="form-label">Password</label>
                     <input value={password} onChange={e => {setPassword(e.target.value)}} style={{width: "30em"}} type="password" className="form-control" />
                 </div>
-                <button className="btn btn-primary w-screen" style={{width: "30em"}}>Sign In</button>
+                <button className="btn btn-primary w-screen" style={{width: "30em"}}>Sign In</button> 
             </form>
         </div>
         </div>

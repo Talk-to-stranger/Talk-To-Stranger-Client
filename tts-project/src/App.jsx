@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom'
 import Navbar from './components/navbar';
 import Home from './components/home';
 import { Login } from './components/login';
+import Register from './components/register';
 
 
 const router = createBrowserRouter([
@@ -24,7 +25,9 @@ const router = createBrowserRouter([
       }
       return null;
   },
-  children: [{
+  children: [
+    
+  {
       path: "/",
       element: (
         <>
