@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 
 export default function Home() {
   const [socket, setSocket] = useState();
-
+  const [users, setUsers] = useState([]);
   const [userStatus, setUserStatus] = useState({
     microphone: false,
     mute: false,
@@ -67,10 +67,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    console.log('123');
     function mainFunction(time) {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-        console.log('tes');
         let mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.start();
 
@@ -113,6 +111,14 @@ export default function Home() {
           audio.play();
         });
       }
+      socket.on('usersUpdate', function (data) {
+        const newUsers = [];
+        console.log(data);
+        for (const newUser in data) {
+          newUsers.push(newUser);
+        }
+        setUsers(newUsers);
+      });
     }
     if (socket) {
       mainFunction(1000);
@@ -150,12 +156,11 @@ export default function Home() {
           <div className="col bg-dark-subtle">
             <div className="d-flex justify-content-center py-3">
               <div className="d-flex flex-column ">
-                <h3 className="fw-bold">Online list User</h3>
+                <h3 className="fw-bold text-center">Online list User</h3>
                 <div className="container text-center">
-                  <h5 className="py-2">User1</h5>
-                  <h5 className="py-2">User1</h5>
-                  <h5 className="py-2">User1</h5>
-                  <h5 className="py-2">User1</h5>
+                  {users.map((user) => {
+                    return <h5>{user}</h5>;
+                  })}
                 </div>
               </div>
             </div>
