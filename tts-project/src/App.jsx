@@ -1,5 +1,5 @@
 import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom';
-// import Navbar from './components/navbar';
+
 import Home from './components/home';
 import { Login } from './components/login';
 import Register from './components/register';
@@ -8,6 +8,7 @@ import Navbar from './components/navbar';
 const router = createBrowserRouter([
   {
     loader: () => {
+
       const isLogin = localStorage.getItem('access_token');
       if (isLogin) {
         return redirect('/');
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
 ]);
 
 function App() {

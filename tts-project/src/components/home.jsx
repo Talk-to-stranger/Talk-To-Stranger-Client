@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
+
 import { setMicrophone, setMute, setOnline, setUsername } from '../features/statusSlice';
+
+;
+const baseUrl = 'https://nyx.yoiego.my.id'
+const localhost = 'http://localhost:3000'
 
 export default function Home() {
   const statusFromRedux = useSelector((state) => state);
@@ -18,8 +23,10 @@ export default function Home() {
   const access_token = localStorage.getItem('access_token');
 
   useEffect(() => {
+
     const s = io('http://localhost:3000');
     s.emit('init', { access_token });
+
     setSocket(s);
   }, [access_token]);
 
@@ -96,6 +103,7 @@ export default function Home() {
           let fileReader = new FileReader();
           fileReader.readAsDataURL(audioBlob);
 
+
           fileReader.onloadend = function () {
             if (!statusFromRedux.status.microphone || !statusFromRedux.status.online) return;
 
@@ -123,11 +131,13 @@ export default function Home() {
         socket.off('send');
       }
       socket.on('usersUpdate', function (data) {
+
         if (data.myProfile) {
           setUsers(data.users);
           dispatch(setUsername(data.myProfile));
         } else {
           setUsers(data);
+
         }
       });
     }
@@ -146,6 +156,7 @@ export default function Home() {
 
   return (
     <>
+
       <div className="container-fluid bg-light vh-100 vw-100 py-3">
         <h3 className="text-center h-0">
           <span className="fw-bold ">Your Accout Name: {statusFromRedux.status.username}</span>
@@ -200,11 +211,14 @@ export default function Home() {
 
 {
   /* <div className="row  h-100">
+
           <div className="col-8">
             <div className="d-flex justify-content-center h-100 py-3">
               <div className="d-flex flex-column ">
                 <h4 className="text-center ">
+
                   <span className="fw-bold">Your Accout Name: {statusFromRedux.status.username}</span>
+
                 </h4>
                 <div>
                   <button className="btn btn-primary mx-2" onClick={toggleMicrophone}>

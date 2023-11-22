@@ -1,3 +1,4 @@
+
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
@@ -7,6 +8,7 @@ export default function Navbar() {
     e.preventDefault();
     localStorage.removeItem('access_token');
     navigate('/login');
+
   }
   return (
     <>
@@ -15,8 +17,10 @@ export default function Navbar() {
           <a className="navbar-brand" href="#">
             Talk To Stranger
           </a>
+
           <form className="d-flex" role="search" onSubmit={handleSubmit}>
             <button className="btn btn-outline-danger" type="submit">
+
               LOGOUT
             </button>
           </form>
