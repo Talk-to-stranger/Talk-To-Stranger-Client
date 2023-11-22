@@ -71,7 +71,7 @@ export default function Register() {
                 <label style={{color: "#EACDC2"}} htmlFor="exampleFormControlInput1" className="form-label">Phone Number</label>
                 <input value={phoneNumber} onChange={e => {setPhoneNumber(e.target.value)}} type="text" className="form-control" placeholder="08xxxxxxxxxx" />
             </div>
-            <button className="btn btn-primary w-screen" style={{width: "30em"}}>Register</button>
+            <button type='submit' className="btn btn-primary w-screen" style={{width: "30em"}}>Register</button>
         </form>
     </div>
     </div>
