@@ -1,13 +1,16 @@
 import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom';
+
 import Home from './components/home';
 import { Login } from './components/login';
 import Register from './components/register';
-
+import Navbar from './components/navbar';
 
 const router = createBrowserRouter([
   {
     loader: () => {
-      if (localStorage.getItem('access_token')) {
+
+      const isLogin = localStorage.getItem('access_token');
+      if (isLogin) {
         return redirect('/');
       }
       return null;
@@ -26,14 +29,21 @@ const router = createBrowserRouter([
   },
   {
     loader: () => {
-      if (!localStorage.getItem('access_token')) {
+      const isNotLogin = localStorage.getItem('access_token');
+      if (!isNotLogin) {
         return redirect('/login');
       }
       return null;
     },
-    path: '/',
-    element: <Home />
+    element: <Navbar />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+    ],
   },
+
 ]);
 
 function App() {
