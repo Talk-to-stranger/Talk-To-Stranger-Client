@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-
+import Navbar from './navbar';
 export default function Home() {
   const [socket, setSocket] = useState();
   const [users, setUsers] = useState([]);
@@ -131,13 +131,14 @@ export default function Home() {
 
   return (
     <>
+    <Navbar />
       <div className="container-fluid bg-light vh-100">
         <div className="row  h-100">
           <div className="col-8">
             <div className="d-flex justify-content-center h-100 py-3">
               <div className="d-flex flex-column ">
                 <h4 className="text-center ">
-                  <span className="fw-bold">Your id:</span> 331233
+                  <span className="fw-bold">Your id:</span> 
                 </h4>
                 <div>
                   <button className="btn btn-primary mx-2" onClick={toggleMicrophone}>

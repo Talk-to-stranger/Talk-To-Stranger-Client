@@ -32,7 +32,12 @@ export const Login = () => {
                 navigate('/')
             }, 2000)
         } catch (error) {
-            console.log(error)
+            Swal.fire({
+                title: "Failed!",
+                html: error.response.data.message,
+                icon: "error",
+                confirmButtonText: "Ok"
+            })
         }
     }
     return (
