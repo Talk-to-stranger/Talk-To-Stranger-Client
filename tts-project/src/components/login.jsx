@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom"
 import Swal from "sweetalert2"
 import axios from "axios"
 const baseUrl = "https://nyx.yoiego.my.id"
+const localhost = 'http://localhost:3000'
 export const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -11,7 +12,7 @@ export const Login = () => {
         e.preventDefault();
 
         try {
-            const { data } = await axios.post(baseUrl + "/login", { email, password })
+            const { data } = await axios.post(localhost + "/login", { email, password })
             localStorage.setItem("access_token", data.access_token)
             const Toast = Swal.mixin({
                 toast: true,
