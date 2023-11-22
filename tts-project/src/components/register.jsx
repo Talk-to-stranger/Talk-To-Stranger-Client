@@ -4,6 +4,7 @@ import Swal from "sweetalert2"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 const baseUrl = "https://nyx.yoiego.my.id"
+const localhost = 'http://localhost:3000'
 export default function Register() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -20,7 +21,7 @@ export default function Register() {
             phoneNumber: phoneNumber
         }
 
-        axios.post(baseUrl + "/register", userData).then((response) => {
+        axios.post(localhost + "/register", userData).then((response) => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",

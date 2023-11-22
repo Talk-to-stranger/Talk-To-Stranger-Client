@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import Navbar from './navbar';
+const baseUrl = 'https://nyx.yoiego.my.id'
+const localhost = 'http://localhost:3000'
 export default function Home() {
   const [socket, setSocket] = useState();
   const [users, setUsers] = useState([]);
@@ -12,7 +14,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const s = io('https://nyx.yoiego.my.id');
+    const s = io(localhost);
     s.emit('init', { access_token: `${localStorage.getItem("access_token")}` });
     setSocket(s);
   }, []);
