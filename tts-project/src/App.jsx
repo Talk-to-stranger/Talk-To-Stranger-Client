@@ -1,14 +1,15 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Home from './components/home';
 import { Login } from './components/login';
+
 
 const router = createBrowserRouter([
   {
     loader: () => {
         const isLogin = localStorage.getItem("token");
         if (isLogin) {
-            throw redirect('/')
+            throw redirect('/') 
         }
         return null;
     },
