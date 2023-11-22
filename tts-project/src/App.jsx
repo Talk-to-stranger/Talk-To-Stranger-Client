@@ -8,36 +8,38 @@ import Register from './components/register';
 const router = createBrowserRouter([
   {
     loader: () => {
-        const isLogin = localStorage.getItem("token");
-        if (isLogin) {
-            throw redirect('/') 
-        }
-        return null;
-    },
-    path: "/login",
-    element: <Login />
-},
-{
-  loader: () => {
-      const isNotLogin = localStorage.getItem("token");
-      if (!isNotLogin) {
-          throw redirect('/login')
+      if (localStorage.getItem('access_token')) {
+        return redirect('/');
       }
       return null;
+    },
+    // path: '',
+    children: [
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
+      },
+    ],
   },
-  children: [
-    
   {
-      path: "/",
-      element: (
-        <>
-      <Navbar />
-      <Home />
+    loader: () => {
+      if (!localStorage.getItem('access_token')) {
+        return redirect('/login');
+      }
+      return null;
+    },
+    path: '/',
+    element: (
+      <>
+        <Navbar />
+        <Home />
       </>
-      )
-  }
-  ]
-}
+    ),
+  },
 ]);
 
 function App() {

@@ -12,8 +12,8 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const s = io('http://localhost:3000');
-    s.emit('init', { access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAwNjI3MDIzfQ.t9pHFTDRqLDiHko3yUViKoE0Ah1o_B6NfZW0QLReODg' });
+    const s = io('https://nyx.yoiego.my.id');
+    s.emit('init', { access_token: `${localStorage.getItem("access_token")}` });
     setSocket(s);
   }, []);
 
