@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-
+import Navbar from './navbar';
 export default function Home() {
   const [socket, setSocket] = useState();
   const [users, setUsers] = useState([]);
@@ -12,8 +12,8 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const s = io('http://localhost:3000');
-    s.emit('init', { access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAwNjI3MDIzfQ.t9pHFTDRqLDiHko3yUViKoE0Ah1o_B6NfZW0QLReODg' });
+    const s = io('https://nyx.yoiego.my.id');
+    s.emit('init', { access_token: `${localStorage.getItem("access_token")}` });
     setSocket(s);
   }, []);
 
@@ -85,7 +85,7 @@ export default function Home() {
 
           let fileReader = new FileReader();
           fileReader.readAsDataURL(audioBlob);
-          console.log(userStatus.microphone, userStatus.online);
+          // console.log(userStatus.microphone, userStatus.online);
 
           fileReader.onloadend = function () {
             if (!userStatus.microphone || !userStatus.online) return;
@@ -113,7 +113,7 @@ export default function Home() {
       }
       socket.on('usersUpdate', function (data) {
         const newUsers = [];
-        console.log(data);
+        // console.log(data);
         for (const newUser in data) {
           newUsers.push(newUser);
         }
@@ -131,13 +131,14 @@ export default function Home() {
 
   return (
     <>
+    <Navbar />
       <div className="container-fluid bg-light vh-100">
         <div className="row  h-100">
           <div className="col-8">
             <div className="d-flex justify-content-center h-100 py-3">
               <div className="d-flex flex-column ">
                 <h4 className="text-center ">
-                  <span className="fw-bold">Your id:</span> 331233
+                  <span className="fw-bold">Your id:</span> 
                 </h4>
                 <div>
                   <button className="btn btn-primary mx-2" onClick={toggleMicrophone}>

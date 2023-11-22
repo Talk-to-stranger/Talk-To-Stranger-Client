@@ -1,4 +1,10 @@
+import {useNavigate} from 'react-router-dom'
 export default function Navbar() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("access_token")
+    navigate('/login')
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -7,7 +13,7 @@ export default function Navbar() {
             Navbar
           </a>
           <form className="d-flex" role="search">
-            <button className="btn btn-outline-danger" type="submit">
+            <button onClick={handleLogout} className="btn btn-outline-danger" type="submit">
               LOGOUT
             </button>
           </form>
