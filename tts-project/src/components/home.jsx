@@ -3,8 +3,7 @@ import { io } from 'socket.io-client';
 
 export default function Home() {
   const [socket, setSocket] = useState();
-  // const [microphone, setMicrophone] = useState(false);
-  // const [online, setOnline] = useState(false);
+
   const [userStatus, setUserStatus] = useState({
     microphone: false,
     mute: false,
@@ -18,24 +17,12 @@ export default function Home() {
     setSocket(s);
   }, []);
 
-  // window.onload = () => {
-  // mainFunction(1000);
-  // };
-
   if (socket) {
     socket.emit('userInformation', userStatus);
   }
 
-  //   const userStatus = {
-  //     microphone: false,
-  //     mute: false,
-  //     username: 'user#' + Math.floor(Math.random() * 999999),
-  //     online: false,
-  //   };
-
   function toggleConnection(e) {
     e.preventDefault();
-    // console.log(userStatus.online);
     if (userStatus.online === false) {
       e.target.classList.remove('btn-primary');
       e.target.classList.add('btn-danger');
@@ -43,12 +30,9 @@ export default function Home() {
       e.target.classList.remove('btn-danger');
       e.target.classList.add('btn-primary');
     }
-    // userStatus.online = !userStatus.online;
-    // console.log(!online);
-    // setOnline(!online);
+
     setUserStatus({ ...userStatus, online: !userStatus.online });
 
-    // editButtonClass(e, userStatus.online);
     emitUserInformation();
   }
 
@@ -64,15 +48,11 @@ export default function Home() {
 
     setUserStatus({ ...userStatus, mute: !userStatus.mute });
 
-    // userStatus.mute = !userStatus.mute;
-
-    // editButtonClass(e, userStatus.mute);
     emitUserInformation();
   }
 
   function toggleMicrophone(e) {
     e.preventDefault();
-    // console.log(userStatus);
     if (userStatus.microphone === false) {
       e.target.classList.remove('btn-primary');
       e.target.classList.add('btn-danger');
@@ -85,16 +65,6 @@ export default function Home() {
 
     emitUserInformation();
   }
-
-  //   function editButtonClass(target, bool) {
-  //     const classList = target.classList;
-  //     classList.remove('enable-btn');
-  //     classList.remove('disable-btn');
-
-  //     if (bool) return classList.add('enable-btn');
-
-  //     classList.add('disable-btn');
-  //   }
 
   useEffect(() => {
     console.log('123');
