@@ -3,8 +3,7 @@ import { io } from 'socket.io-client';
 
 export default function Home() {
   const [socket, setSocket] = useState();
-  // const [microphone, setMicrophone] = useState(false);
-  // const [online, setOnline] = useState(false);
+  const [users, setUsers] = useState([]);
   const [userStatus, setUserStatus] = useState({
     microphone: false,
     mute: false,
@@ -18,24 +17,12 @@ export default function Home() {
     setSocket(s);
   }, []);
 
-  // window.onload = () => {
-  // mainFunction(1000);
-  // };
-
   if (socket) {
     socket.emit('userInformation', userStatus);
   }
 
-  //   const userStatus = {
-  //     microphone: false,
-  //     mute: false,
-  //     username: 'user#' + Math.floor(Math.random() * 999999),
-  //     online: false,
-  //   };
-
   function toggleConnection(e) {
     e.preventDefault();
-    // console.log(userStatus.online);
     if (userStatus.online === false) {
       e.target.classList.remove('btn-primary');
       e.target.classList.add('btn-danger');
@@ -43,12 +30,9 @@ export default function Home() {
       e.target.classList.remove('btn-danger');
       e.target.classList.add('btn-primary');
     }
-    // userStatus.online = !userStatus.online;
-    // console.log(!online);
-    // setOnline(!online);
+
     setUserStatus({ ...userStatus, online: !userStatus.online });
 
-    // editButtonClass(e, userStatus.online);
     emitUserInformation();
   }
 
@@ -64,15 +48,11 @@ export default function Home() {
 
     setUserStatus({ ...userStatus, mute: !userStatus.mute });
 
-    // userStatus.mute = !userStatus.mute;
-
-    // editButtonClass(e, userStatus.mute);
     emitUserInformation();
   }
 
   function toggleMicrophone(e) {
     e.preventDefault();
-    // console.log(userStatus);
     if (userStatus.microphone === false) {
       e.target.classList.remove('btn-primary');
       e.target.classList.add('btn-danger');
@@ -86,21 +66,9 @@ export default function Home() {
     emitUserInformation();
   }
 
-  //   function editButtonClass(target, bool) {
-  //     const classList = target.classList;
-  //     classList.remove('enable-btn');
-  //     classList.remove('disable-btn');
-
-  //     if (bool) return classList.add('enable-btn');
-
-  //     classList.add('disable-btn');
-  //   }
-
   useEffect(() => {
-    console.log('123');
     function mainFunction(time) {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-        console.log('tes');
         let mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.start();
 
@@ -143,6 +111,14 @@ export default function Home() {
           audio.play();
         });
       }
+      socket.on('usersUpdate', function (data) {
+        const newUsers = [];
+        console.log(data);
+        for (const newUser in data) {
+          newUsers.push(newUser);
+        }
+        setUsers(newUsers);
+      });
     }
     if (socket) {
       mainFunction(1000);
@@ -180,12 +156,11 @@ export default function Home() {
           <div className="col bg-dark-subtle">
             <div className="d-flex justify-content-center py-3">
               <div className="d-flex flex-column ">
-                <h3 className="fw-bold">Online list User</h3>
+                <h3 className="fw-bold text-center">Online list User</h3>
                 <div className="container text-center">
-                  <h5 className="py-2">User1</h5>
-                  <h5 className="py-2">User1</h5>
-                  <h5 className="py-2">User1</h5>
-                  <h5 className="py-2">User1</h5>
+                  {users.map((user) => {
+                    return <h5>{user}</h5>;
+                  })}
                 </div>
               </div>
             </div>
