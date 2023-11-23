@@ -16,9 +16,12 @@ export default function Navbar() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.removeItem('access_token');
-    socket.disconnect();
-    navigate('/login');
+    const data = { access_token: `${localStorage.getItem("access_token")}` }
+    socket.emit('userOffline', data, () => {
+      socket.disconnect();
+      localStorage.removeItem('access_token');
+      navigate('/login');
+    })
   }
   return (
     <>

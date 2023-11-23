@@ -185,9 +185,9 @@ export default function Home() {
                   return (
                     <div key={index} className="d-flex">
                       {user.status === 'offline' ? (
-                        <img src="https://res-console.cloudinary.com/domiyggba/media_explorer_thumbnails/70ba11e7a728e3342669731e8558f213/detailed" alt="icon-offline" style={{ height: '1.2rem' }} />
+                        <img src="https://res.cloudinary.com/domiyggba/image/upload/v1700699602/t84jl5sk4xqrxfstcncd.png" alt="icon-offline" style={{ height: '1.2rem' }} />
                       ) : (
-                        <img src="https://res-console.cloudinary.com/domiyggba/media_explorer_thumbnails/e465618204b6869893bf2adfa745c0bd/detailed" alt="icon-online" style={{ height: '1.2rem' }} />
+                        <img src="https://res.cloudinary.com/domiyggba/image/upload/v1700699553/k9layaulgvuvy5rkh62c.png" alt="icon-online" style={{ height: '1.2rem' }} />
                       )}
                       <h6 className="px-3">{user.name}</h6>
                     </div>
