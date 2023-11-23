@@ -35,11 +35,11 @@ export default function Home() {
   function toggleConnection(e) {
     e.preventDefault();
     if (statusFromRedux.status.online === false) {
-      e.target.classList.remove('btn-primary');
-      e.target.classList.add('btn-danger');
-    } else {
       e.target.classList.remove('btn-danger');
-      e.target.classList.add('btn-primary');
+      e.target.classList.add('btn-success');
+    } else {
+      e.target.classList.remove('btn-success');
+      e.target.classList.add('btn-danger');
     }
 
     // setUserStatus({ ...userStatus, online: !userStatus.online });
@@ -51,11 +51,11 @@ export default function Home() {
   function toggleMute(e) {
     e.preventDefault();
     if (statusFromRedux.status.mute === false) {
-      e.target.classList.remove('btn-primary');
-      e.target.classList.add('btn-danger');
-    } else {
       e.target.classList.remove('btn-danger');
-      e.target.classList.add('btn-primary');
+      e.target.classList.add('btn-success');
+    } else {
+      e.target.classList.remove('btn-success');
+      e.target.classList.add('btn-danger');
     }
 
     // setUserStatus({ ...userStatus, mute: !userStatus.mute });
@@ -67,11 +67,11 @@ export default function Home() {
   function toggleMicrophone(e) {
     e.preventDefault();
     if (statusFromRedux.status.microphone === false) {
-      e.target.classList.remove('btn-primary');
-      e.target.classList.add('btn-danger');
-    } else {
       e.target.classList.remove('btn-danger');
-      e.target.classList.add('btn-primary');
+      e.target.classList.add('btn-success');
+    } else {
+      e.target.classList.remove('btn-success');
+      e.target.classList.add('btn-danger');
     }
 
     // setUserStatus({ ...userStatus, microphone: !userStatus.microphone });
@@ -151,12 +151,14 @@ export default function Home() {
 
   return (
     <>
-      <div className="container-fluid bg-light vh-100 vw-100 py-3">
+      <div className="container-fluid vh-100 vw-100 py-3" style={{ backgroundColor: '#001021' }}>
         <h3 className="text-center h-0">
-          <span className="fw-bold ">Your Accout Name: {statusFromRedux.status.username}</span>
+          <span className="fw-bold" style={{ color: '#EACDC2' }}>
+            Your Accout Name: {statusFromRedux.status.username}
+          </span>
         </h3>
         <div className="d-flex flex-row justify-content-evenly align-items-center h-75">
-          <div className="card" style={{ width: '24rem' }}>
+          <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold">Welcome to Talk To Stranger</span>
@@ -167,20 +169,20 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="bg-light" style={{ width: '24rem' }}>
+          <div style={{ width: '24rem' }}>
             <div className="card-body text-center">
-              <button className="btn btn-primary mx-2" onClick={toggleMicrophone}>
+              <button className="btn btn-danger mx-2" onClick={toggleMicrophone}>
                 Open Mic
               </button>
-              <button className="btn btn-primary mx-2" onClick={toggleMute}>
+              <button className="btn btn-danger mx-2" onClick={toggleMute}>
                 Mute
               </button>
-              <button className="btn btn-primary mx-2" onClick={toggleConnection}>
+              <button className="btn btn-danger mx-2" onClick={toggleConnection}>
                 Online
               </button>
             </div>
           </div>
-          <div className="card overflow-auto" style={{ width: '24rem', height: '12rem' }}>
+          <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold ">List Users</span>
