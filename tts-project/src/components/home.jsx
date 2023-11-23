@@ -151,6 +151,7 @@ export default function Home() {
 
   return (
     <>
+
       <div className="container-fluid vh-100 vw-100 py-3" style={{ backgroundColor: '#001021' }}>
         <h3 className="text-center h-0">
           <span className="fw-bold" style={{ color: '#EACDC2' }}>
@@ -159,6 +160,7 @@ export default function Home() {
         </h3>
         <div className="d-flex flex-row justify-content-evenly align-items-center h-75">
           <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
+
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold">Welcome to Talk To Stranger</span>
@@ -182,7 +184,9 @@ export default function Home() {
               </button>
             </div>
           </div>
+
           <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
+
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold ">List Users</span>
@@ -221,13 +225,13 @@ export default function Home() {
 
                 </h4>
                 <div>
-                  <button className="btn btn-primary mx-2" onClick={toggleMicrophone}>
+                  <button className="btn btn-danger mx-2" onClick={toggleMicrophone}>
                     Open Mic
                   </button>
-                  <button className="btn btn-primary mx-2" onClick={toggleMute}>
+                  <button className="btn btn-danger mx-2" onClick={toggleMute}>
                     Mute
                   </button>
-                  <button className="btn btn-primary mx-2" onClick={toggleConnection}>
+                  <button className="btn btn-danger mx-2" onClick={toggleConnection}>
                     Online
                   </button>
                 </div>
