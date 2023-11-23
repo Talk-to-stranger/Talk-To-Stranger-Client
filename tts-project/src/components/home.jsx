@@ -4,9 +4,8 @@ import { io } from 'socket.io-client';
 
 import { setMicrophone, setMute, setOnline, setUsername } from '../features/statusSlice';
 
-;
-const baseUrl = 'https://nyx.yoiego.my.id'
-const localhost = 'http://localhost:3000'
+const baseUrl = 'https://nyx.yoiego.my.id';
+const localhost = 'http://localhost:3000';
 
 export default function Home() {
   const statusFromRedux = useSelector((state) => state);
@@ -23,7 +22,6 @@ export default function Home() {
   const access_token = localStorage.getItem('access_token');
 
   useEffect(() => {
-
     const s = io('http://localhost:3000');
     s.emit('init', { access_token });
 
@@ -103,7 +101,6 @@ export default function Home() {
           let fileReader = new FileReader();
           fileReader.readAsDataURL(audioBlob);
 
-
           fileReader.onloadend = function () {
             if (!statusFromRedux.status.microphone || !statusFromRedux.status.online) return;
 
@@ -131,13 +128,11 @@ export default function Home() {
         socket.off('send');
       }
       socket.on('usersUpdate', function (data) {
-
         if (data.myProfile) {
           setUsers(data.users);
           dispatch(setUsername(data.myProfile));
         } else {
           setUsers(data);
-
         }
       });
     }
@@ -156,7 +151,6 @@ export default function Home() {
 
   return (
     <>
-
       <div className="container-fluid bg-light vh-100 vw-100 py-3">
         <h3 className="text-center h-0">
           <span className="fw-bold ">Your Accout Name: {statusFromRedux.status.username}</span>
@@ -186,7 +180,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <div className="card bg-transparant" style={{ width: '24rem' }}>
+          <div className="card overflow-auto" style={{ width: '24rem', height: '12rem' }}>
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold ">List Users</span>
@@ -195,8 +189,12 @@ export default function Home() {
                 {users.map((user, index) => {
                   return (
                     <div key={index} className="d-flex">
+                      {user.status === 'offline' ? (
+                        <img src="https://res-console.cloudinary.com/domiyggba/media_explorer_thumbnails/70ba11e7a728e3342669731e8558f213/detailed" alt="icon-offline" style={{ height: '1.2rem' }} />
+                      ) : (
+                        <img src="https://res-console.cloudinary.com/domiyggba/media_explorer_thumbnails/e465618204b6869893bf2adfa745c0bd/detailed" alt="icon-online" style={{ height: '1.2rem' }} />
+                      )}
                       <h6 className="px-3">{user.name}</h6>
-                      <h6>({user.status})</h6>
                     </div>
                   );
                 })}
