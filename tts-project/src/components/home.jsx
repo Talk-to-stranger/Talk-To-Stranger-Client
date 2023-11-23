@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 
-import { setMicrophone, setMute, setOnline, setUsername } from '../features/statusSlice';
+import { setMute, setOnline, setUsername } from '../features/statusSlice';
 import { setUsers } from '../features/userSlice';
 
 const baseUrl = 'https://nyx.yoiego.my.id';
@@ -27,13 +27,17 @@ export default function Home() {
   }
 
   function toggleConnection(e) {
+    console.log('masuk');
+
     e.preventDefault();
     if (statusFromRedux.status.online === false) {
       e.target.classList.remove('btn-danger');
       e.target.classList.add('btn-success');
+      console.log(e.target);
     } else {
       e.target.classList.remove('btn-success');
       e.target.classList.add('btn-danger');
+      console.log(e.target);
     }
 
     dispatch(setOnline());
@@ -46,27 +50,14 @@ export default function Home() {
     if (statusFromRedux.status.mute === false) {
       e.target.classList.remove('btn-danger');
       e.target.classList.add('btn-success');
+      console.log(e.target);
     } else {
       e.target.classList.remove('btn-success');
       e.target.classList.add('btn-danger');
+      console.log(e.target);
     }
 
     dispatch(setMute());
-
-    emitUserInformation();
-  }
-
-  function toggleMicrophone(e) {
-    e.preventDefault();
-    if (statusFromRedux.status.microphone === false) {
-      e.target.classList.remove('btn-danger');
-      e.target.classList.add('btn-success');
-    } else {
-      e.target.classList.remove('btn-success');
-      e.target.classList.add('btn-danger');
-    }
-
-    dispatch(setMicrophone());
 
     emitUserInformation();
   }
@@ -93,7 +84,7 @@ export default function Home() {
           fileReader.readAsDataURL(audioBlob);
 
           fileReader.onloadend = function () {
-            if (!statusFromRedux.status.microphone || !statusFromRedux.status.online) return;
+            if (!statusFromRedux.status.online) return;
 
             let base64String = fileReader.result;
             socket.emit('voice', base64String);
@@ -140,7 +131,6 @@ export default function Home() {
 
   return (
     <>
-
       <div className="container-fluid vh-100 vw-100 py-3" style={{ backgroundColor: '#001021' }}>
         <h3 className="text-center h-0">
           <span className="fw-bold" style={{ color: '#EACDC2' }}>
@@ -149,7 +139,6 @@ export default function Home() {
         </h3>
         <div className="d-flex flex-row justify-content-evenly align-items-center h-75">
           <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
-
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold">Welcome to Talk To Stranger</span>
@@ -162,20 +151,16 @@ export default function Home() {
           </div>
           <div style={{ width: '24rem' }}>
             <div className="card-body text-center">
-              <button className="btn btn-danger mx-2" onClick={toggleMicrophone}>
-                Open Mic
-              </button>
-              <button className="btn btn-danger mx-2" onClick={toggleMute}>
-                Mute
-              </button>
-              <button className="btn btn-danger mx-2" onClick={toggleConnection}>
-                Online
-              </button>
+              {statusFromRedux.status.online == false ? (
+                <button className="btn btn-danger mx-2bi bi-mic-mute-fill" onClick={toggleConnection} style={{ width: '3rem', height: '3rem' }}></button>
+              ) : (
+                <button className="btn btn-success bi bi-mic-fill" onClick={toggleConnection} style={{ width: '3rem', height: '3rem' }}></button>
+              )}
+              <button className="btn btn-danger mx-2 bi bi-headset" onClick={toggleMute} style={{ width: '3rem', height: '3rem' }}></button>
             </div>
           </div>
 
           <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
-
             <div className="card-body">
               <h5 className="card-title text-center">
                 <span className="fw-bold ">List Users</span>
