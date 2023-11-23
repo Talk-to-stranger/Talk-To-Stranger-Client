@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
+const baseUrl = 'https://nyx.yoiego.my.id';
+// const localhost = 'http://localhost:3000';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [socket, setSocket] = useState();
 
   useEffect(() => {
-    const s = io('http://localhost:3000');
+    const s = io(baseUrl);
 
     setSocket(s);
   }, []);
