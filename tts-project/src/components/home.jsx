@@ -6,7 +6,7 @@ import { setMicrophone, setMute, setOnline, setUsername } from '../features/stat
 import { setUsers } from '../features/userSlice';
 
 const baseUrl = 'https://nyx.yoiego.my.id';
-const localhost = 'http://localhost:3000';
+// const localhost = 'http://localhost:3000';
 
 export default function Home() {
   const statusFromRedux = useSelector((state) => state);
@@ -16,7 +16,7 @@ export default function Home() {
   const access_token = localStorage.getItem('access_token');
 
   useEffect(() => {
-    const s = io('http://localhost:3000');
+    const s = io(baseUrl);
     s.emit('init', { access_token });
 
     setSocket(s);
