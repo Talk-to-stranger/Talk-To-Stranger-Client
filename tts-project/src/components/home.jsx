@@ -160,8 +160,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2' }}>
-            <div className="card-body">
+          <div className="card" style={{ width: '24rem', backgroundColor: '#596475', color: '#EACDC2', height: '13rem' }}>
+            <div className="card-body  overflow-auto">
               <h5 className="card-title text-center">
                 <span className="fw-bold ">List Users</span>
               </h5>
