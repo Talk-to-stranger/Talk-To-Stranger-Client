@@ -12,11 +12,12 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-secondary">
-        <div className="container-fluid px-3">
-          <a className="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg bg-dark bg-gradient">
+        <div className="container-fluid">
+          {/* <a className="navbar-brand" style={{ color: "#EACDC2" }}>
             Talk To Stranger
-          </a>
+          </a> */}
+          <img style={{width: "5em"}} className='bg-dark bg-gradient' src="assasin-removebg-preview.jpg" alt="Talk-To-Stranger Icon" />
 
           <form className="d-flex" role="search" onSubmit={handleSubmit}>
             <button className="btn btn-outline-danger" type="submit">
