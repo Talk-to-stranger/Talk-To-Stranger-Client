@@ -1,11 +1,21 @@
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const [socket, setSocket] = useState();
+
+  useEffect(() => {
+    const s = io('http://localhost:3000');
+
+    setSocket(s);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.removeItem('access_token');
+    socket.disconnect();
     navigate('/login');
   }
   return (

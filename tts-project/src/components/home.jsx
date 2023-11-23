@@ -119,12 +119,10 @@ export default function Home() {
         socket.off('send');
       }
       socket.on('usersUpdate', function (data) {
-        if (data.myProfile) {
-          dispatch(setUsers(data.users));
-          dispatch(setUsername(data.myProfile));
-        } else {
-          dispatch(setUsers(data));
-        }
+        dispatch(setUsers(data));
+      });
+      socket.on('myProfile', function (data) {
+        dispatch(setUsername(data));
       });
     }
     if (socket) {
