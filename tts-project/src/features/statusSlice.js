@@ -23,9 +23,15 @@ export const statusSlice = createSlice({
     setUsername: (state, action) => {
       state.username = action.payload;
     },
+    setMuteLogout: (state) => {
+      state.mute = false;
+    },
+    setOnlineLogout: (state) => {
+      state.online = false;
+    },
   },
 });
 
-export const { setMicrophone, setMute, setOnline, setUsername } = statusSlice.actions;
+export const { setMicrophone, setMute, setOnline, setUsername, setMuteLogout, setOnlineLogout } = statusSlice.actions;
 
 export default statusSlice.reducer;
