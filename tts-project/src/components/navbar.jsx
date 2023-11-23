@@ -12,9 +12,6 @@ export default function Navbar() {
     <>
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
-          {/* <a className="navbar-brand" style={{ color: "#EACDC2" }}>
-          Talk To Stranger
-        </a> */}
           <img style={{ width: '3em' }} className="bg-dark" src="assasin-removebg-preview.png" alt="Talk-To-Stranger Icon" />
 
           <form className="d-flex" role="search" onSubmit={handleSubmit}>

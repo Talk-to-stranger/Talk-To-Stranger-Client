@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 
 import { setMicrophone, setMute, setOnline, setUsername } from '../features/statusSlice';
+import { setUsers } from '../features/userSlice';
 
 const baseUrl = 'https://nyx.yoiego.my.id';
 const localhost = 'http://localhost:3000';
@@ -11,13 +12,6 @@ export default function Home() {
   const statusFromRedux = useSelector((state) => state);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState();
-  const [users, setUsers] = useState([]);
-  // const [userStatus, setUserStatus] = useState({
-  //   microphone: false,
-  //   mute: false,
-  //   username: 'user#',
-  //   online: false,
-  // });
 
   const access_token = localStorage.getItem('access_token');
 
@@ -42,7 +36,6 @@ export default function Home() {
       e.target.classList.add('btn-danger');
     }
 
-    // setUserStatus({ ...userStatus, online: !userStatus.online });
     dispatch(setOnline());
 
     emitUserInformation();
@@ -58,7 +51,6 @@ export default function Home() {
       e.target.classList.add('btn-danger');
     }
 
-    // setUserStatus({ ...userStatus, mute: !userStatus.mute });
     dispatch(setMute());
 
     emitUserInformation();
@@ -74,7 +66,6 @@ export default function Home() {
       e.target.classList.add('btn-danger');
     }
 
-    // setUserStatus({ ...userStatus, microphone: !userStatus.microphone });
     dispatch(setMicrophone());
 
     emitUserInformation();
@@ -129,10 +120,10 @@ export default function Home() {
       }
       socket.on('usersUpdate', function (data) {
         if (data.myProfile) {
-          setUsers(data.users);
+          dispatch(setUsers(data.users));
           dispatch(setUsername(data.myProfile));
         } else {
-          setUsers(data);
+          dispatch(setUsers(data));
         }
       });
     }
@@ -145,7 +136,7 @@ export default function Home() {
     socket.emit('userInformation', statusFromRedux);
   }
 
-  if (!users) {
+  if (!statusFromRedux.users.users) {
     return <div>Loading........</div>;
   }
 
@@ -188,7 +179,7 @@ export default function Home() {
                 <span className="fw-bold ">List Users</span>
               </h5>
               <div className="container text-center">
-                {users.map((user, index) => {
+                {statusFromRedux.users.users.map((user, index) => {
                   return (
                     <div key={index} className="d-flex">
                       {user.status === 'offline' ? (
