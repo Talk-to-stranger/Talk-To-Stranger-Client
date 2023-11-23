@@ -1,11 +1,21 @@
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const [socket, setSocket] = useState();
+
+  useEffect(() => {
+    const s = io('http://localhost:3000');
+
+    setSocket(s);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.removeItem('access_token');
+    socket.disconnect();
     navigate('/login');
   }
   return (
@@ -13,9 +23,6 @@ export default function Navbar() {
 
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
-          {/* <a className="navbar-brand" style={{ color: "#EACDC2" }}>
-          Talk To Stranger
-        </a> */}
           <img style={{ width: '3em' }} className="bg-dark" src="assasin-removebg-preview.png" alt="Talk-To-Stranger Icon" />
 
 
