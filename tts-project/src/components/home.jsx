@@ -144,8 +144,8 @@ export default function Home() {
                 <span className="fw-bold">Welcome to Talk To Stranger</span>
               </h5>
               <p className="card-text">
-                Talk to strangers is a platform that can make you connect with people you dont know. How can we connect? the method is very simple All you have to do is click the online button below, you will automatically be connected to
-                people who are online here too
+                Talk to strangers is a platform that can make you connect with people you dont know. How can we connect? the method is very simple All you have to do is click the icon button on the right, you will automatically be connected to
+                people who are online (green light) here too
               </p>
             </div>
           </div>
